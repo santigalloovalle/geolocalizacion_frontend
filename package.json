@@ -13,7 +13,7 @@
     "mapbox-gl": "^3.6.0",
     "mapkick": "^0.2.6",
     "pinia": "^2.1.7",
-    "sweetalert2": "^11.13.3",
+    "sweetalert2": "^11.14.0",
     "vue": "^3.4.29",
     "vue-axios": "^3.5.2",
     "vue-router": "^4.3.3"

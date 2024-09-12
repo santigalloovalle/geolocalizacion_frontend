@@ -19,7 +19,7 @@
                 <tbody>
                     <tr v-for="user in users" :key="user.id">
                         <td>{{ user.useDocumento }}</td>
-                        <td>{{ user.useNombre }}</td>
+                        <td>{{ user.useNombre + ' ' + user.useApellido }}</td>
                         <td>{{ user.useDireccion }}</td>
                         <td>{{ user.distances }}</td>
                         <td>
@@ -40,7 +40,11 @@
             </div>
         </div>
     </div>
-    <pre>{{ usersStore.users.value }}</pre>
+    <h2 class="text-center my-4">USER UBICATION</h2>
+    <MapComponent 
+        :markers="users"
+        :userMarkers="true"
+    ></MapComponent> 
 </template>
 
 <script setup>
@@ -48,6 +52,7 @@ import {useUsersStore} from '../../stores/usersStore';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router'
 import LoadingComponent from '../LoadingComponent.vue';
+import MapComponent from '../MapComponent.vue';
 
 const usersStore = useUsersStore();
 const route = useRoute(); 

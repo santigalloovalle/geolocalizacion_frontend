@@ -1,8 +1,11 @@
 <template>
     <div class="container my-3 text-center">
-        <button class="btn btn-outline-success mb-2" @click="getLocation()">Get Location</button>
+        <div v-if="!userMarkers">
+            <button class="btn btn-outline-success mb-2" @click="getLocation()">Get Location</button>
+        </div>
         <div class="shadow mb-4" ref="mapContainer" style="height: 500px; width: 70%; margin: 0 auto;"></div>
         {{ lat }} , {{ lng }}
+
     </div>
 
 
@@ -19,6 +22,8 @@ const lng = ref(-74.08087143248079)
 const newLat = ref()
 const newLng = ref()
 const mapContainer = ref()
+const markers = ref()
+const userMarkers = ref()
 
 onMounted(() => {
     map.value = L.map(mapContainer.value).setView([4.632368001533859, -74.08087143248079], 13);
@@ -33,12 +38,21 @@ onMounted(() => {
             lng.value = position.target._latlng.lng;
             console.log(position)
         })
+        
 })
 const props = defineProps({
     distances: {
         type: Object || String,
         required: false
     },
+    markers: {
+        type: String,
+        required: false
+    },
+    userMarkers: {
+        type: Boolean,
+        required: false
+    }
 });
 const emit = defineEmits(['distances']);
 
@@ -47,23 +61,33 @@ watch([lat, lng], ([newLat, newLng]) => {
     emit('distances', newLat, newLng); // Emitir el evento con ambos valores
 });
 
-
 function getLocation() {
 
-if (navigator.geolocation) {
-  navigator.geolocation.watchPosition((position) => {
-    lat.value = position.coords.latitude;
-    lng.value = position.coords.longitude;
-    map.value.setView([lat.value, lng.value], 19);
-  });
-} else {
-  alert("Geolocation is not supported by this browser.");
-}
+    if (navigator.geolocation) {
+        navigator.geolocation.watchPosition((position) => {
+            lat.value = position.coords.latitude;
+            lng.value = position.coords.longitude;
+            map.value.setView([lat.value, lng.value], 19);
+        });
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
 }
 
 watchEffect(() => {
-lat.value = newLat.value || lat.value
-lng.value = newLng.value || lng.value
+    lat.value = newLat.value || lat.value
+    lng.value = newLng.value || lng.value
+    markers.value = props.markers
+    userMarkers.value = props.userMarkers
+    console.log(userMarkers.value)
+    if (userMarkers.value) {
+        for (let i = 0; i < props.markers.length; i++) {
+            markers.value = props.markers[i].useCoordinates;
+            L.marker([markers.value.y, markers.value.x])
+            .addTo(map.value)
+            console.log(markers.value.x, markers.value.y)
+        }
+    }
 })
 
 </script>
