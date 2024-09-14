@@ -22,13 +22,13 @@ const lng = ref(-74.08087143248079)
 const newLat = ref()
 const newLng = ref()
 const mapContainer = ref()
-const markers = ref()
+const marker = ref()
 const userMarkers = ref()
 
 onMounted(() => {
     map.value = L.map(mapContainer.value).setView([4.632368001533859, -74.08087143248079], 13);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
+        maxZoom: 12,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map.value);
     L.marker([lat.value, lng.value], { draggable: true })
@@ -75,17 +75,16 @@ function getLocation() {
 }
 
 watchEffect(() => {
+    
     lat.value = newLat.value || lat.value
     lng.value = newLng.value || lng.value
-    markers.value = props.markers
     userMarkers.value = props.userMarkers
     console.log(userMarkers.value)
     if (userMarkers.value) {
         for (let i = 0; i < props.markers.length; i++) {
-            markers.value = props.markers[i].useCoordinates;
-            L.marker([markers.value.y, markers.value.x])
+            marker.value = props.markers[i].useCoordinates;
+            L.marker([marker.value.y, marker.value.x])
             .addTo(map.value)
-            console.log(markers.value.x, markers.value.y)
         }
     }
 })

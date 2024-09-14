@@ -49,7 +49,6 @@ const handleDistances = (lat, lng) => {
 
 const sendUser = () => {
     var cordinates = cordinatesY.value +','+ cordinatesX.value
-    console.log(name.value + ' ' + lastName.value + ' ' + direction.value + ' ' + cordinates);
     usersStore.createUsers(name.value, lastName.value, document.value, direction.value, cordinates ); 
 }
 

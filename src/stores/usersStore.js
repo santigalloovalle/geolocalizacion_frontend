@@ -36,12 +36,8 @@ export const useUsersStore = defineStore('users', () => {
           useCordinates: useCordinates,
         }
       })
-      if (response.data.status === false) {
-        console.log(response.data)
-        alert('error', response.data.message, 'error')
-      } else if (response.data.status === true) {
-        alert('success', t('modalStudCreate.successMsj'), 'success')
-      }
+      
+        alert('success', 'Usuario creado correctamente', 'success')
       } catch (error) {
         console.log(error);
       }
