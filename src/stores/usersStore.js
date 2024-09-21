@@ -6,10 +6,11 @@ import { alert } from '../alerts.js'
 export const useUsersStore = defineStore('users', () => {
   
   const users= ref([])
-  const URL_USERS = 'http://localhost:8000/users/'
+  const URL_USERS = 'http://localhost:3000/users/'
 
-  const readUsers = async (cord) => {
+  const readUsers = async (cordY, cordX) => {
     try {
+      const cord = `${cordY},${cordX}`
       const response = await axios({
         url: URL_USERS+`${cord}`,
         method: 'GET',

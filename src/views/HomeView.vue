@@ -47,9 +47,10 @@ onMounted(async () => {
 });
 
 const verUsuarios = (lat, lng) => {
-  console.log('Latitud:', cordX.value, 'Longitud:', cordY.value);
-  var cordinates = lng + ',' + lat 
-  router.push({ name: 'users', params: { cordinates } });
+  // console.log('Latitud:', cordX.value, 'Longitud:', cordY.value);
+  var cordX = lat 
+  var cordY = lng 
+  router.push({ name: 'users', params: { cordX, cordY } });
   usersStore.readUsers(cordinates)
 }
 

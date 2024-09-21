@@ -61,9 +61,12 @@ const users = ref([]);
 const loading = ref(false);
 
 onMounted(async () => {
-    console.log(route.params.cordinates)
+    console.log(route.params.cordY)
+    console.log(route.params.cordX)
     loading.value = true;
-    await usersStore.readUsers(route.params.cordinates);
+    var cordY = route.params.cordY
+    var cordX = route.params.cordX
+    await usersStore.readUsers(cordY, cordX);
     users.value = usersStore.users
     loading.value = false;
 });
